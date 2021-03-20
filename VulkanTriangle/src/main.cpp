@@ -84,7 +84,7 @@ private:
 
     //GLFWwindow* window;
 
-    VkInstance instance;
+    //VkInstance instance;
     VkDebugUtilsMessengerEXT debugMessenger;
     VkSurfaceKHR surface;
 
@@ -182,7 +182,7 @@ private:
     }*/
 
     void initVulkan() {
-        createInstance();
+        //createInstance();
         setupDebugMessenger();
         createSurface();
         pickPhysicalDevice();
@@ -241,11 +241,11 @@ private:
         vkDestroyDevice(device, nullptr);
 
         if (enableValidationLayers) {
-            DestroyDebugUtilsMessengerEXT(instance, debugMessenger, nullptr);
+            DestroyDebugUtilsMessengerEXT(vkEngine.instance, debugMessenger, nullptr);
         }
 
-        vkDestroySurfaceKHR(instance, surface, nullptr);
-        vkDestroyInstance(instance, nullptr);
+        vkDestroySurfaceKHR(vkEngine.instance, surface, nullptr);
+        vkDestroyInstance(vkEngine.instance, nullptr);
 
         glfwDestroyWindow(vkEngine.window);
 
@@ -357,7 +357,7 @@ private:
 
     }
 
-    void createInstance() {
+    /*void createInstance() {
         if (enableValidationLayers && !checkValidationLayerSupport()) {
             throw std::runtime_error("validation layers requested, but not available!");
         }
@@ -392,13 +392,13 @@ private:
             createInfo.pNext = nullptr;
         }
 
-        if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
+        if (vkCreateInstance(&createInfo, nullptr, &vkEngine.instance) != VK_SUCCESS) {
             throw std::runtime_error("failed to create instance!");
         }
-    }
+    }*/
 
     void createSurface() {
-        if (glfwCreateWindowSurface(instance, vkEngine.window, nullptr, &surface) != VK_SUCCESS) {
+        if (glfwCreateWindowSurface(vkEngine.instance, vkEngine.window, nullptr, &surface) != VK_SUCCESS) {
             throw std::runtime_error("failed to create window surface!");
         }
     }
@@ -406,14 +406,14 @@ private:
     void pickPhysicalDevice() {
         // Query number of graphic cards
         uint32_t deviceCount = 0;
-        vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
+        vkEnumeratePhysicalDevices(vkEngine.instance, &deviceCount, nullptr);
         if (deviceCount == 0) {
             throw std::runtime_error("failed to find GPUs with Vulkan support!");
         }
 
         // Store all the devices in an array
         std::vector<VkPhysicalDevice> devices(deviceCount);
-        vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
+        vkEnumeratePhysicalDevices(vkEngine.instance, &deviceCount, devices.data());
 
         // Evaluate the devices
         for (const auto& device : devices) {
@@ -870,7 +870,7 @@ private:
         VkDebugUtilsMessengerCreateInfoEXT createInfo;
         populateDebugMessengerCreateInfo(createInfo);
 
-        if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
+        if (CreateDebugUtilsMessengerEXT(vkEngine.instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
             throw std::runtime_error("failed to set up debug messenger!");
         }
     }
@@ -889,7 +889,7 @@ private:
         return extensions;
     }
 
-    bool checkValidationLayerSupport() {
+    /*bool checkValidationLayerSupport() {
         uint32_t layerCount;
         vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -912,7 +912,7 @@ private:
         }
 
         return true;
-    }
+    }*/
 
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
         std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
