@@ -70,10 +70,8 @@ class HelloTriangleApplication {
 public:
     void run() {
         VulkanInitializer vkInitializer;
-        VulkanEngine vkEngine;
 
         vkInitializer.initialize(&vkEngine);
-        window = vkEngine.window;
 
         //initWindow();
         initVulkan();
@@ -84,8 +82,7 @@ public:
 private:
     VulkanEngine vkEngine;
 
-
-    GLFWwindow* window;
+    //GLFWwindow* window;
 
     VkInstance instance;
     VkDebugUtilsMessengerEXT debugMessenger;
@@ -118,7 +115,7 @@ private:
     size_t currentFrame = 0;
 
     void mainLoop() {
-        while (!glfwWindowShouldClose(window)) {
+        while (!glfwWindowShouldClose(vkEngine.window)) {
             glfwPollEvents();
             drawFrame();
         }
@@ -175,14 +172,14 @@ private:
         currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
     }
 
-    void initWindow() {
+    /*void initWindow() {
         glfwInit();
 
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
         window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
-    }
+    }*/
 
     void initVulkan() {
         createInstance();
@@ -250,7 +247,7 @@ private:
         vkDestroySurfaceKHR(instance, surface, nullptr);
         vkDestroyInstance(instance, nullptr);
 
-        glfwDestroyWindow(window);
+        glfwDestroyWindow(vkEngine.window);
 
         glfwTerminate();
     }
@@ -401,7 +398,7 @@ private:
     }
 
     void createSurface() {
-        if (glfwCreateWindowSurface(instance, window, nullptr, &surface) != VK_SUCCESS) {
+        if (glfwCreateWindowSurface(instance, vkEngine.window, nullptr, &surface) != VK_SUCCESS) {
             throw std::runtime_error("failed to create window surface!");
         }
     }
@@ -754,7 +751,7 @@ private:
         }
         else {
             int width, height;
-            glfwGetFramebufferSize(window, &width, &height);
+            glfwGetFramebufferSize(vkEngine.window, &width, &height);
 
             VkExtent2D actualExtent = {
                 static_cast<uint32_t>(width),

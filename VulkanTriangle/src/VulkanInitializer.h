@@ -23,5 +23,6 @@ private:
 	uint32_t width;
 	uint32_t height;
 	GLFWwindow* initWindow();
+	void initializeVulkan(VulkanEngine* vkEngine);
 
 };
