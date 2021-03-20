@@ -1,6 +1,7 @@
 
 
 #define GLFW_INCLUDE_VULKAN
+
 #include <GLFW/glfw3.h>
 
 #include <cstdint> // Necessary for UINT32_MAX
@@ -12,6 +13,8 @@
 #include <optional>
 #include <set>
 #include <fstream>
+
+#include "VulkanInitializer.h"
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
@@ -66,13 +69,22 @@ struct SwapChainSupportDetails {
 class HelloTriangleApplication {
 public:
     void run() {
-        initWindow();
+        VulkanInitializer vkInitializer;
+        VulkanEngine vkEngine;
+
+        vkInitializer.initialize(&vkEngine);
+        window = vkEngine.window;
+
+        //initWindow();
         initVulkan();
         mainLoop();
         cleanup();
     }
 
 private:
+    VulkanEngine vkEngine;
+
+
     GLFWwindow* window;
 
     VkInstance instance;

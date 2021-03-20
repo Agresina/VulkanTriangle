@@ -160,10 +160,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\VulkanEngine.cpp" />
+    <ClCompile Include="src\VulkanInitializer.cpp" />
+    <ClCompile Include="src\VulkanInstanceCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader.frag" />
     <None Include="shaders\shader.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\VulkanEngine.h" />
+    <ClInclude Include="src\VulkanInitializer.h" />
+    <ClInclude Include="src\VulkanInstanceCreator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
