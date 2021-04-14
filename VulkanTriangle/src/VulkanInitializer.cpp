@@ -6,6 +6,7 @@ int VulkanInitializer::initialize(VulkanEngine* vkEngine) {
     vkEngine->window = vkInitializer.initWindow();
     vkInitializer.initializeVulkan(vkEngine);
 
+    VulkanDeviceInitializer::initializeDevice(*vkEngine);
     return 0;
 }
 
@@ -19,6 +20,7 @@ GLFWwindow* VulkanInitializer::initWindow() {
 }
 
 void VulkanInitializer::initializeVulkan(VulkanEngine* vkEngine) {
-    vkEngine->instance = VulkanInstanceCreator::createInstance();
+    vkEngine->instance = VulkanInstanceCreator::createInstance(*vkEngine);
+    DebugMessenger::setupDebugMessenger(*vkEngine);
 }
 

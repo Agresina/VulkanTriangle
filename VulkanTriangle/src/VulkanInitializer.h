@@ -3,6 +3,8 @@
 #include <cstdint>
 #include "VulkanEngine.h"
 #include "VulkanInstanceCreator.h"
+#include "DebugMessenger.h"
+#include "VulkanDeviceInitializer.h"
 
 const uint32_t DEFAULT_WIDTH = 800;
 const uint32_t DEFAULT_HEIGHT = 600;

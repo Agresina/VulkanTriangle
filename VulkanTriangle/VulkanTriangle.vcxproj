@@ -159,7 +159,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CreatorInfoFactory.cpp" />
+    <ClCompile Include="src\DebugMessenger.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\VulkanDeviceInitializer.cpp" />
     <ClCompile Include="src\VulkanEngine.cpp" />
     <ClCompile Include="src\VulkanInitializer.cpp" />
     <ClCompile Include="src\VulkanInstanceCreator.cpp" />
@@ -169,6 +172,10 @@
     <None Include="shaders\shader.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CreatorInfoFactory.h" />
+    <ClInclude Include="src\DebugMessenger.h" />
+    <ClInclude Include="src\Utils.h" />
+    <ClInclude Include="src\VulkanDeviceInitializer.h" />
     <ClInclude Include="src\VulkanEngine.h" />
     <ClInclude Include="src\VulkanInitializer.h" />
     <ClInclude Include="src\VulkanInstanceCreator.h" />
