@@ -7,6 +7,7 @@ int VulkanInitializer::initialize(VulkanEngine* vkEngine) {
     vkInitializer.initializeVulkan(vkEngine);
 
     VulkanDeviceInitializer::initializeDevice(*vkEngine);
+    VulkanSwapChainConfigurer::createSwapChain(*vkEngine);
     return 0;
 }
 

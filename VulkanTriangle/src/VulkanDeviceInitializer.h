@@ -19,6 +19,5 @@ private:
 	static void pickPhysicalDevice(VulkanEngine& vkEngine);
 	static void createLogicalDevice(VulkanEngine& vkEngine);
 	static bool isDeviceSuitable(VulkanEngine& vkEngine, VkPhysicalDevice device);
-	static QueueFamilyIndices findQueueFamilies(VulkanEngine& vkEngine, VkPhysicalDevice device);
 	static bool checkDeviceExtensionSupport(VkPhysicalDevice device);
 };

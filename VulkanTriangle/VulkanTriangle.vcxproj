@@ -166,6 +166,7 @@
     <ClCompile Include="src\VulkanEngine.cpp" />
     <ClCompile Include="src\VulkanInitializer.cpp" />
     <ClCompile Include="src\VulkanInstanceCreator.cpp" />
+    <ClCompile Include="src\VulkanSwapChainConfigurer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader.frag" />
@@ -179,6 +180,7 @@
     <ClInclude Include="src\VulkanEngine.h" />
     <ClInclude Include="src\VulkanInitializer.h" />
     <ClInclude Include="src\VulkanInstanceCreator.h" />
+    <ClInclude Include="src\VulkanSwapChainConfigurer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
