@@ -6,6 +6,7 @@
 #include "DebugMessenger.h"
 #include "VulkanDeviceInitializer.h"
 #include "VulkanSwapChainConfigurer.h"
+#include "VulkanGraphicPipeline.h"
 
 const uint32_t DEFAULT_WIDTH = 800;
 const uint32_t DEFAULT_HEIGHT = 600;

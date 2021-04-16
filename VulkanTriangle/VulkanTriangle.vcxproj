@@ -164,6 +164,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\VulkanDeviceInitializer.cpp" />
     <ClCompile Include="src\VulkanEngine.cpp" />
+    <ClCompile Include="src\VulkanGraphicPipeline.cpp" />
     <ClCompile Include="src\VulkanInitializer.cpp" />
     <ClCompile Include="src\VulkanInstanceCreator.cpp" />
     <ClCompile Include="src\VulkanSwapChainConfigurer.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\Utils.h" />
     <ClInclude Include="src\VulkanDeviceInitializer.h" />
     <ClInclude Include="src\VulkanEngine.h" />
+    <ClInclude Include="src\VulkanGraphicPipeline.h" />
     <ClInclude Include="src\VulkanInitializer.h" />
     <ClInclude Include="src\VulkanInstanceCreator.h" />
     <ClInclude Include="src\VulkanSwapChainConfigurer.h" />

@@ -8,6 +8,8 @@ int VulkanInitializer::initialize(VulkanEngine* vkEngine) {
 
     VulkanDeviceInitializer::initializeDevice(*vkEngine);
     VulkanSwapChainConfigurer::createSwapChain(*vkEngine);
+    VulkanGraphicPipeline::createGraphicsPipeline(*vkEngine);
+
     return 0;
 }
 

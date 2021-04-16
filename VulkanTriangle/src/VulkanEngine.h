@@ -72,10 +72,16 @@ public:
 	VkQueue graphicsQueue;
 	VkQueue presentQueue;
 
+	// SwapChain
 	VkSwapchainKHR swapChain;
 	std::vector<VkImage> swapChainImages;
 	VkFormat swapChainImageFormat;
 	VkExtent2D swapChainExtent;
+
+	// Graphics pipeline
+	VkPipelineLayout pipelineLayout;
+	VkRenderPass renderPass;
+	VkPipeline graphicsPipeline;
 private:
 	
 };
