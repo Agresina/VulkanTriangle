@@ -77,6 +77,7 @@ public:
 	std::vector<VkImage> swapChainImages;
 	VkFormat swapChainImageFormat;
 	VkExtent2D swapChainExtent;
+	std::vector<VkImageView> swapChainImageViews;
 
 	// Graphics pipeline
 	VkPipelineLayout pipelineLayout;

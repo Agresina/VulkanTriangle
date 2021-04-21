@@ -6,6 +6,7 @@
 class VulkanSwapChainConfigurer {
 public:
 	static void createSwapChain(VulkanEngine& vkEngine);
+	static void createImageViews(VulkanEngine& vkEngine);
 private:
 	static SwapChainSupportDetails querySwapChainSupport(VulkanEngine& vkEngine, VkPhysicalDevice device);
 	static VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);

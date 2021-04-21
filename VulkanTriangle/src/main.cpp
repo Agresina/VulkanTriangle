@@ -60,7 +60,6 @@ private:
 
     VkDebugUtilsMessengerEXT debugMessenger;
 
-    std::vector<VkImageView> swapChainImageViews;
     std::vector<VkFramebuffer> swapChainFramebuffers;
 
     VkCommandPool commandPool;
@@ -132,7 +131,6 @@ private:
 
 
     void initVulkan() {
-        createImageViews();
         createFramebuffers();
         createCommandPool();
         createCommandBuffers();
@@ -176,7 +174,7 @@ private:
         vkDestroyPipeline(vkEngine.device, vkEngine.graphicsPipeline, nullptr);
         vkDestroyPipelineLayout(vkEngine.device, vkEngine.pipelineLayout, nullptr);
         vkDestroyRenderPass(vkEngine.device, vkEngine.renderPass, nullptr);
-        for (auto imageView : swapChainImageViews) {
+        for (auto imageView : vkEngine.swapChainImageViews) {
             vkDestroyImageView(vkEngine.device, imageView, nullptr);
         }
         vkDestroySwapchainKHR(vkEngine.device, vkEngine.swapChain, nullptr);
@@ -257,11 +255,11 @@ private:
     }
 
     void createFramebuffers() {
-        swapChainFramebuffers.resize(swapChainImageViews.size());
+        swapChainFramebuffers.resize(vkEngine.swapChainImageViews.size());
 
-        for (size_t i = 0; i < swapChainImageViews.size(); i++) {
+        for (size_t i = 0; i < vkEngine.swapChainImageViews.size(); i++) {
             VkImageView attachments[] = {
-                swapChainImageViews[i]
+                vkEngine.swapChainImageViews[i]
             };
 
             VkFramebufferCreateInfo framebufferInfo{};
@@ -277,32 +275,6 @@ private:
                 throw std::runtime_error("failed to create framebuffer!");
             }
         }
-    }
-
-    void createImageViews() {
-        swapChainImageViews.resize(vkEngine.swapChainImages.size());
-
-        for (size_t i = 0; i < vkEngine.swapChainImages.size(); i++) {
-            VkImageViewCreateInfo createInfo{};
-            createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-            createInfo.image = vkEngine.swapChainImages[i];
-            createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-            createInfo.format = vkEngine.swapChainImageFormat;
-            createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
-            createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
-            createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
-            createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
-            createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            createInfo.subresourceRange.baseMipLevel = 0;
-            createInfo.subresourceRange.levelCount = 1;
-            createInfo.subresourceRange.baseArrayLayer = 0;
-            createInfo.subresourceRange.layerCount = 1;
-
-            if (vkCreateImageView(vkEngine.device, &createInfo, nullptr, &swapChainImageViews[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to create image views!");
-            }
-        }
-
     }
 
     QueueFamilyIndices findQueueFamiliesInner(VkPhysicalDevice device) {
