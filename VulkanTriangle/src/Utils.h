@@ -2,6 +2,7 @@
 
 #include <vulkan/vulkan.h>
 #include <iostream>
+#include <fstream>
 #include "VulkanEngine.h"
 
 class Utils {
