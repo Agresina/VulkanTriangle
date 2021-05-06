@@ -4,6 +4,7 @@ void VulkanDrawingBuffersConfigurator::configureDrawingBuffers(VulkanEngine& vkE
 	createFramebuffers(vkEngine);
 	createCommandPool(vkEngine);
 	createCommandBuffers(vkEngine);
+    createSyncObjects(vkEngine);
 }
 
 void VulkanDrawingBuffersConfigurator::createFramebuffers(VulkanEngine& vkEngine) {
@@ -85,5 +86,28 @@ void VulkanDrawingBuffersConfigurator::createCommandBuffers(VulkanEngine& vkEngi
             throw std::runtime_error("failed to record command buffer!");
         }
 
+    }
+}
+
+void VulkanDrawingBuffersConfigurator::createSyncObjects(VulkanEngine& vkEngine) {
+    vkEngine.imageAvailableSemaphores.resize(vkEngine.MAX_FRAMES_IN_FLIGHT);
+    vkEngine.renderFinishedSemaphores.resize(vkEngine.MAX_FRAMES_IN_FLIGHT);
+    vkEngine.inFlightFences.resize(vkEngine.MAX_FRAMES_IN_FLIGHT);
+    vkEngine.imagesInFlight.resize(vkEngine.swapChainImages.size(), VK_NULL_HANDLE);
+
+    VkSemaphoreCreateInfo semaphoreInfo{};
+    semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+
+    VkFenceCreateInfo fenceInfo{};
+    fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+    fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+
+    for (size_t i = 0; i < vkEngine.MAX_FRAMES_IN_FLIGHT; i++) {
+        if (vkCreateSemaphore(vkEngine.device, &semaphoreInfo, nullptr, &vkEngine.imageAvailableSemaphores[i]) != VK_SUCCESS ||
+            vkCreateSemaphore(vkEngine.device, &semaphoreInfo, nullptr, &vkEngine.renderFinishedSemaphores[i]) != VK_SUCCESS ||
+            vkCreateFence(vkEngine.device, &fenceInfo, nullptr, &vkEngine.inFlightFences[i]) != VK_SUCCESS) {
+
+            throw std::runtime_error("failed to create semaphores for a frame!");
+        }
     }
 }

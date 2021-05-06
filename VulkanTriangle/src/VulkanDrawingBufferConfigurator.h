@@ -12,4 +12,5 @@ private:
 	static void createFramebuffers(VulkanEngine& vkEngine);
 	static void createCommandPool(VulkanEngine& vkEngine);
 	static void createCommandBuffers(VulkanEngine& vkEngine);
+	static void createSyncObjects(VulkanEngine& vkEngine);
 };
