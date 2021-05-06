@@ -45,9 +45,6 @@
     <ClCompile Include="src\VulkanGraphicPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VulkanRenderPassCreator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\VulkanDrawingBufferConfigurator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -86,9 +83,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\VulkanGraphicPipeline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VulkanRenderPassCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\VulkanDrawingBufferConfigurator.h">
