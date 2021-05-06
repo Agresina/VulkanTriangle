@@ -11,6 +11,7 @@ int VulkanInitializer::initialize(VulkanEngine* vkEngine) {
     VulkanSwapChainConfigurer::createImageViews(*vkEngine);
     VulkanRenderPassCreator::createRenderPass(*vkEngine);
     VulkanGraphicPipeline::createGraphicsPipeline(*vkEngine);
+    VulkanDrawingBuffersConfigurator::configureDrawingBuffers(*vkEngine);
 
     return 0;
 }

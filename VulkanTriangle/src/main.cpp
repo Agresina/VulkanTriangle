@@ -26,16 +26,6 @@ const bool enableValidationLayers = false;
 const bool enableValidationLayers = true;
 #endif
 
-VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger) {
-    auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-    if (func != nullptr) {
-        return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
-    }
-    else {
-        return VK_ERROR_EXTENSION_NOT_PRESENT;
-    }
-}
-
 void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator) {
     auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
     if (func != nullptr) {
@@ -57,13 +47,7 @@ public:
 
 private:
     VulkanEngine vkEngine;
-
     VkDebugUtilsMessengerEXT debugMessenger;
-
-    std::vector<VkFramebuffer> swapChainFramebuffers;
-
-    VkCommandPool commandPool;
-    std::vector<VkCommandBuffer> commandBuffers;
 
     std::vector<VkSemaphore> imageAvailableSemaphores;
     std::vector<VkSemaphore> renderFinishedSemaphores;
@@ -101,7 +85,7 @@ private:
         submitInfo.pWaitSemaphores = waitSemaphores;
         submitInfo.pWaitDstStageMask = waitStages;
         submitInfo.commandBufferCount = 1;
-        submitInfo.pCommandBuffers = &commandBuffers[imageIndex];
+        submitInfo.pCommandBuffers = &vkEngine.commandBuffers[imageIndex];
 
         VkSemaphore signalSemaphores[] = { imageAvailableSemaphores[currentFrame] };
         submitInfo.signalSemaphoreCount = 1;
@@ -131,9 +115,6 @@ private:
 
 
     void initVulkan() {
-        createFramebuffers();
-        createCommandPool();
-        createCommandBuffers();
         createSyncObjects();
     }
 
@@ -167,8 +148,8 @@ private:
             vkDestroySemaphore(vkEngine.device, imageAvailableSemaphores[i], nullptr);
             vkDestroyFence(vkEngine.device, inFlightFences[i], nullptr);
         }
-        vkDestroyCommandPool(vkEngine.device, commandPool, nullptr);
-        for (auto framebuffer : swapChainFramebuffers) {
+        vkDestroyCommandPool(vkEngine.device, vkEngine.commandPool, nullptr);
+        for (auto framebuffer : vkEngine.swapChainFramebuffers) {
             vkDestroyFramebuffer(vkEngine.device, framebuffer, nullptr);
         }
         vkDestroyPipeline(vkEngine.device, vkEngine.graphicsPipeline, nullptr);
@@ -190,149 +171,6 @@ private:
         glfwDestroyWindow(vkEngine.window);
 
         glfwTerminate();
-    }
-
-    void createCommandPool() {
-        QueueFamilyIndices queueFamilyIndices = findQueueFamiliesInner(vkEngine.physicalDevice);
-
-        VkCommandPoolCreateInfo poolInfo{};
-        poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-        poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily.value();
-        poolInfo.flags = 0; // Optional
-
-        if (vkCreateCommandPool(vkEngine.device, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create command pool!");
-        }
-    }
-
-    void createCommandBuffers() {
-        commandBuffers.resize(swapChainFramebuffers.size());
-        VkCommandBufferAllocateInfo allocInfo{};
-        allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-        allocInfo.commandPool = commandPool;
-        allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-        allocInfo.commandBufferCount = (uint32_t)commandBuffers.size();
-
-        if (vkAllocateCommandBuffers(vkEngine.device, &allocInfo, commandBuffers.data()) != VK_SUCCESS) {
-            throw std::runtime_error("failed to allocate command buffers!");
-        }
-
-        for (size_t i = 0; i < commandBuffers.size(); i++) {
-            VkCommandBufferBeginInfo beginInfo{};
-            beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-            beginInfo.flags = 0; // Optional
-            beginInfo.pInheritanceInfo = nullptr; // Optional
-
-            if (vkBeginCommandBuffer(commandBuffers[i], &beginInfo) != VK_SUCCESS) {
-                throw std::runtime_error("failed to begin recording command buffer!");
-            }
-
-            VkRenderPassBeginInfo renderPassInfo{};
-            renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-            renderPassInfo.renderPass = vkEngine.renderPass;
-            renderPassInfo.framebuffer = swapChainFramebuffers[i];
-
-            renderPassInfo.renderArea.offset = { 0, 0 };
-            renderPassInfo.renderArea.extent = vkEngine.swapChainExtent;
-
-            VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
-            renderPassInfo.clearValueCount = 1;
-            renderPassInfo.pClearValues = &clearColor;
-
-            vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-
-            vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, vkEngine.graphicsPipeline);
-
-            vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
-
-            vkCmdEndRenderPass(commandBuffers[i]);
-
-            if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to record command buffer!");
-            }
-
-        }
-    }
-
-    void createFramebuffers() {
-        swapChainFramebuffers.resize(vkEngine.swapChainImageViews.size());
-
-        for (size_t i = 0; i < vkEngine.swapChainImageViews.size(); i++) {
-            VkImageView attachments[] = {
-                vkEngine.swapChainImageViews[i]
-            };
-
-            VkFramebufferCreateInfo framebufferInfo{};
-            framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-            framebufferInfo.renderPass = vkEngine.renderPass;
-            framebufferInfo.attachmentCount = 1;
-            framebufferInfo.pAttachments = attachments;
-            framebufferInfo.width = vkEngine.swapChainExtent.width;
-            framebufferInfo.height = vkEngine.swapChainExtent.height;
-            framebufferInfo.layers = 1;
-
-            if (vkCreateFramebuffer(vkEngine.device, &framebufferInfo, nullptr, &swapChainFramebuffers[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to create framebuffer!");
-            }
-        }
-    }
-
-    QueueFamilyIndices findQueueFamiliesInner(VkPhysicalDevice device) {
-        QueueFamilyIndices indices;
-
-
-        uint32_t queueFamilyCount = 0;
-        vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
-
-        std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-        vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
-
-
-        // Find Queue Family with graphics support
-        int i = 0;
-        for (const auto& queueFamily : queueFamilies) {
-            if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
-                indices.graphicsFamily = i;
-            }
-
-            VkBool32 presentSupport = false;
-            vkGetPhysicalDeviceSurfaceSupportKHR(device, i, vkEngine.surface, &presentSupport);
-
-            if (presentSupport) {
-                indices.presentFamily = i;
-            }
-
-            if (indices.isComplete()) {
-                break;
-            }
-
-            i++;
-        }
-        return indices;
-    }
-
-    static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
-        std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
-
-        return VK_FALSE;
-    }
-
-    static std::vector<char> readFile(const std::string& filename) {
-        std::ifstream file(filename, std::ios::ate | std::ios::binary);
-
-        if (!file.is_open()) {
-            throw std::runtime_error("failed to open file!");
-        }
-
-        size_t fileSize = (size_t)file.tellg();
-        std::vector<char> buffer(fileSize);
-
-        file.seekg(0);
-        file.read(buffer.data(), fileSize);
-
-        file.close();
-
-        return buffer;
     }
 };
 

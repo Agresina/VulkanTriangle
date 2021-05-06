@@ -78,6 +78,11 @@ public:
 	VkFormat swapChainImageFormat;
 	VkExtent2D swapChainExtent;
 	std::vector<VkImageView> swapChainImageViews;
+	
+	// Drawing buffers
+	std::vector<VkFramebuffer> swapChainFramebuffers;
+	VkCommandPool commandPool;
+	std::vector<VkCommandBuffer> commandBuffers;
 
 	// Graphics pipeline
 	VkPipelineLayout pipelineLayout;

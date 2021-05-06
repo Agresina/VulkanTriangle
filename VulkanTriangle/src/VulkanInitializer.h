@@ -8,6 +8,7 @@
 #include "VulkanSwapChainConfigurer.h"
 #include "VulkanRenderPassCreator.h"
 #include "VulkanGraphicPipeline.h"
+#include "VulkanDrawingBufferConfigurator.h"
 
 const uint32_t DEFAULT_WIDTH = 800;
 const uint32_t DEFAULT_HEIGHT = 600;
