@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
+#include <stdexcept>
 #include <vulkan/vulkan.h>
 #include <vector>
 #include <optional>
@@ -58,7 +59,7 @@ public:
 		return details;
 	}
 
-	int test();
+	void mainLoop();
 	SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
 
 	GLFWwindow* window;
@@ -96,5 +97,5 @@ public:
 	std::vector<VkFence> imagesInFlight;
 	size_t currentFrame = 0;
 private:
-	
+	void drawFrame();
 };

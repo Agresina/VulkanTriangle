@@ -39,71 +39,13 @@ public:
         VulkanInitializer vkInitializer;
 
         vkInitializer.initialize(&vkEngine);
-        mainLoop();
+        vkEngine.mainLoop();
         cleanup();
     }
 
 private:
     VulkanEngine vkEngine;
     VkDebugUtilsMessengerEXT debugMessenger;
-
-    void mainLoop() {
-        while (!glfwWindowShouldClose(vkEngine.window)) {
-            glfwPollEvents();
-            drawFrame();
-        }
-        // Wait until the devices is idle before cleaning up
-        vkDeviceWaitIdle(vkEngine.device);
-    }
-
-    void drawFrame() {
-        vkWaitForFences(vkEngine.device, 1, &vkEngine.inFlightFences[vkEngine.currentFrame], VK_TRUE, UINT64_MAX);
-
-        uint32_t imageIndex;
-        vkAcquireNextImageKHR(vkEngine.device, vkEngine.swapChain, UINT64_MAX, vkEngine.imageAvailableSemaphores[vkEngine.currentFrame], VK_NULL_HANDLE, &imageIndex);
-        // Check if a previous frame is using this image (i.e. there is its fence to wait on)
-        if (vkEngine.imagesInFlight[imageIndex] != VK_NULL_HANDLE) {
-            vkWaitForFences(vkEngine.device, 1, &vkEngine.imagesInFlight[imageIndex], VK_TRUE, UINT64_MAX);
-        }
-        // Mark the image as now being in use by this frame
-        vkEngine.imagesInFlight[imageIndex] = vkEngine.inFlightFences[vkEngine.currentFrame];
-
-        VkSubmitInfo submitInfo{};
-        submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-
-        VkSemaphore waitSemaphores[] = { vkEngine.imageAvailableSemaphores[vkEngine.currentFrame] };
-        VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
-        submitInfo.waitSemaphoreCount = 1;
-        submitInfo.pWaitSemaphores = waitSemaphores;
-        submitInfo.pWaitDstStageMask = waitStages;
-        submitInfo.commandBufferCount = 1;
-        submitInfo.pCommandBuffers = &vkEngine.commandBuffers[imageIndex];
-
-        VkSemaphore signalSemaphores[] = { vkEngine.imageAvailableSemaphores[vkEngine.currentFrame] };
-        submitInfo.signalSemaphoreCount = 1;
-        submitInfo.pSignalSemaphores = signalSemaphores;
-
-        vkResetFences(vkEngine.device, 1, &vkEngine.inFlightFences[vkEngine.currentFrame]);
-        if (vkQueueSubmit(vkEngine.graphicsQueue, 1, &submitInfo, vkEngine.inFlightFences[vkEngine.currentFrame]) != VK_SUCCESS) {
-            throw std::runtime_error("failed to submit draw command buffer!");
-        }
-
-        VkPresentInfoKHR presentInfo{};
-        presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-
-        presentInfo.waitSemaphoreCount = 1;
-        presentInfo.pWaitSemaphores = signalSemaphores;
-        VkSwapchainKHR swapChains[] = { vkEngine.swapChain };
-        presentInfo.swapchainCount = 1;
-        presentInfo.pSwapchains = swapChains;
-        presentInfo.pImageIndices = &imageIndex;
-
-        vkQueuePresentKHR(vkEngine.presentQueue, &presentInfo);
-
-        vkQueueWaitIdle(vkEngine.presentQueue);
-
-        vkEngine.currentFrame = (vkEngine.currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
-    }
 
     void cleanup() {
         for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
