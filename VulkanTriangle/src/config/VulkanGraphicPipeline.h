@@ -1,6 +1,7 @@
 #pragma once
 
-#include "VulkanEngine.h"
+#include "../VulkanEngine.h"
+#include "../Utils.h"
 
 class VulkanGraphicPipeline {
 public:

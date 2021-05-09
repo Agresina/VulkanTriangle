@@ -72,7 +72,6 @@ std::vector<const char*> VulkanInstanceCreator::getRequiredExtensions(VulkanEngi
 }
 
 void VulkanInstanceCreator::setupValidationLayers(VulkanEngine& vkEngine, VkInstanceCreateInfo createInfo) {
-    VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
     if (vkEngine.enableValidationLayers) {
         createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
         createInfo.ppEnabledLayerNames = validationLayers.data();

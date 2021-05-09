@@ -1,7 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include <cstdint>
-#include "VulkanEngine.h"
+#include "../VulkanEngine.h"
 #include "VulkanInstanceCreator.h"
 #include "DebugMessenger.h"
 #include "VulkanDeviceInitializer.h"

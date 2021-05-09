@@ -24,28 +24,28 @@
     <ClCompile Include="src\VulkanEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VulkanInitializer.cpp">
+    <ClCompile Include="src\config\CreatorInfoFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VulkanInstanceCreator.cpp">
+    <ClCompile Include="src\config\DebugMessenger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DebugMessenger.cpp">
+    <ClCompile Include="src\config\VulkanDeviceInitializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CreatorInfoFactory.cpp">
+    <ClCompile Include="src\config\VulkanDrawingBufferConfigurator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VulkanDeviceInitializer.cpp">
+    <ClCompile Include="src\config\VulkanGraphicPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VulkanSwapChainConfigurer.cpp">
+    <ClCompile Include="src\config\VulkanInitializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VulkanGraphicPipeline.cpp">
+    <ClCompile Include="src\config\VulkanInstanceCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VulkanDrawingBufferConfigurator.cpp">
+    <ClCompile Include="src\config\VulkanSwapChainConfigurer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -61,31 +61,31 @@
     <ClInclude Include="src\VulkanEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\VulkanInitializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VulkanInstanceCreator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DebugMessenger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CreatorInfoFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\VulkanDeviceInitializer.h">
+    <ClInclude Include="src\config\CreatorInfoFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\VulkanSwapChainConfigurer.h">
+    <ClInclude Include="src\config\DebugMessenger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\VulkanGraphicPipeline.h">
+    <ClInclude Include="src\config\VulkanDeviceInitializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\VulkanDrawingBufferConfigurator.h">
+    <ClInclude Include="src\config\VulkanDrawingBufferConfigurator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config\VulkanGraphicPipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config\VulkanInitializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config\VulkanInstanceCreator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config\VulkanSwapChainConfigurer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

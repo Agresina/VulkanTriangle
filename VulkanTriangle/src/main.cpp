@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "VulkanInitializer.h"
+#include "config/VulkanInitializer.h"
 
 class HelloTriangleApplication {
 public:
