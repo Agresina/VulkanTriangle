@@ -7,9 +7,9 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 
-#include "../Utils.h"
 #include "../VulkanEngine.h"
 
+class VulkanEngine;
 class VulkanDeviceInitializer {
 
 public:
@@ -20,4 +20,5 @@ private:
 	static void createLogicalDevice(VulkanEngine& vkEngine);
 	static bool isDeviceSuitable(VulkanEngine& vkEngine, VkPhysicalDevice device);
 	static bool checkDeviceExtensionSupport(VkPhysicalDevice device);
+	static QueueFamilyIndices findQueueFamilies(VulkanEngine& vkEngine, VkPhysicalDevice device);
 };

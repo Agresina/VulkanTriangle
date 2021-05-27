@@ -1,5 +1,21 @@
 #include "VulkanEngine.h"
 
+
+class Utils;
+GLFWwindow* VulkanEngine::initWindow() {
+    glfwInit();
+
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+    return glfwCreateWindow(width, height, "Vulkan", nullptr, nullptr);
+}
+
+void VulkanEngine::initializeVulkan() {
+    instance = VulkanInstanceCreator::createInstance(*this);
+    DebugMessenger::setupDebugMessenger(*this);
+}
+
 void VulkanEngine::drawFrame() {
     vkWaitForFences(device, 1, &inFlightFences[currentFrame], VK_TRUE, UINT64_MAX);
 

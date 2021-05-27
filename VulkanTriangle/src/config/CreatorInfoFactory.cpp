@@ -1,5 +1,6 @@
 #include "CreatorInfoFactory.h"
 
+/**
 VkDebugUtilsMessengerCreateInfoEXT CreatorInfoFactory::debugMessengerCreateInfo(VulkanEngine& vkEngine) {
     VkDebugUtilsMessengerCreateInfoEXT createInfo = {};
     createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
@@ -9,3 +10,4 @@ VkDebugUtilsMessengerCreateInfoEXT CreatorInfoFactory::debugMessengerCreateInfo(
 
     return createInfo;
 }
+*/

@@ -1,10 +1,18 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
+#include <cstdint>
 #include <stdexcept>
 #include <vulkan/vulkan.h>
 #include <vector>
 #include <optional>
+
+#include "config/VulkanInstanceCreator.h"
+#include "config/DebugMessenger.h"
+#include "config/VulkanDeviceInitializer.h"
+#include "config/VulkanSwapChainConfigurer.h"
+#include "config/VulkanGraphicPipeline.h"
+#include "config/VulkanDrawingBufferConfigurator.h"
 
 struct SwapChainSupportDetails {
 	VkSurfaceCapabilitiesKHR capabilities;
@@ -31,6 +39,17 @@ const std::vector<const char*> deviceExtensions = {
 
 class VulkanEngine {
 public:
+	VulkanEngine() {
+		window = initWindow();
+		initializeVulkan();
+
+		VulkanDeviceInitializer::initializeDevice(*this);
+		VulkanSwapChainConfigurer::createSwapChain(*this);
+		VulkanSwapChainConfigurer::createImageViews(*this);
+		VulkanGraphicPipeline::initialize(*this);
+		VulkanDrawingBuffersConfigurator::configureDrawingBuffers(*this);
+	}
+
 	#ifdef NDEBUG
 		const bool enableValidationLayers = false;
 	#else
@@ -66,6 +85,7 @@ public:
 	VkInstance instance;
 	VkDebugUtilsMessengerEXT debugMessenger;
 
+	QueueFamilyIndices indices;
 	VkSurfaceKHR surface;
 	VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 	VkDevice device;
@@ -98,6 +118,10 @@ public:
 	size_t currentFrame = 0;
 
 private:
+	const uint32_t width = 800;
+	const uint32_t height = 600;
+	GLFWwindow* initWindow();
+	void initializeVulkan();
 	void drawFrame();
 	void cleanup();
 	void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator);

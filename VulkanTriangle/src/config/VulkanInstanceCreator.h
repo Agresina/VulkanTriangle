@@ -9,6 +9,8 @@
 #include "../VulkanEngine.h"
 #include "CreatorInfoFactory.h"
 
+class VulkanEngine;
+class Utils;
 class VulkanInstanceCreator {
 public:
 	static VkInstance createInstance(VulkanEngine& vkEngine);

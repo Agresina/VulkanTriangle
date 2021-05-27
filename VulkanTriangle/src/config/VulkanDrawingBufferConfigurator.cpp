@@ -31,11 +31,11 @@ void VulkanDrawingBuffersConfigurator::createFramebuffers(VulkanEngine& vkEngine
 }
 
 void VulkanDrawingBuffersConfigurator::createCommandPool(VulkanEngine& vkEngine) {
-    QueueFamilyIndices queueFamilyIndices = Utils::findQueueFamilies(vkEngine, vkEngine.physicalDevice);
+    //QueueFamilyIndices queueFamilyIndices = Utils::findQueueFamilies(vkEngine, vkEngine.physicalDevice);
 
     VkCommandPoolCreateInfo poolInfo{};
     poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-    poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily.value();
+    poolInfo.queueFamilyIndex = vkEngine.indices.graphicsFamily.value();
     poolInfo.flags = 0; // Optional
 
     if (vkCreateCommandPool(vkEngine.device, &poolInfo, nullptr, &vkEngine.commandPool) != VK_SUCCESS) {

@@ -47,8 +47,8 @@ void VulkanGraphicPipeline::createRenderPass(VulkanEngine& vkEngine) {
 }
 
 void VulkanGraphicPipeline::createGraphicsPipeline(VulkanEngine& vkEngine) {
-    auto vertShaderCode = Utils::readFile("shaders/vert.spv");
-    auto fragShaderCode = Utils::readFile("shaders/frag.spv");
+    auto vertShaderCode = VulkanGraphicPipeline::readFile("shaders/vert.spv");
+    auto fragShaderCode = VulkanGraphicPipeline::readFile("shaders/frag.spv");
 
     VkShaderModule vertShaderModule = createShaderModule(vkEngine, vertShaderCode);
     VkShaderModule fragShaderModule = createShaderModule(vkEngine, fragShaderCode);
@@ -188,4 +188,22 @@ VkShaderModule VulkanGraphicPipeline::createShaderModule(VulkanEngine& vkEngine,
     }
 
     return shaderModule;
+}
+
+std::vector<char> VulkanGraphicPipeline::readFile(const std::string& filename) {
+    std::ifstream file(filename, std::ios::ate | std::ios::binary);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("failed to open file!");
+    }
+
+    size_t fileSize = (size_t)file.tellg();
+    std::vector<char> buffer(fileSize);
+
+    file.seekg(0);
+    file.read(buffer.data(), fileSize);
+
+    file.close();
+
+    return buffer;
 }

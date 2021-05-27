@@ -4,6 +4,7 @@
 #include "../VulkanEngine.h"
 #include "CreatorInfoFactory.h"
 
+class VulkanEngine;
 class DebugMessenger {
 public:
 	static void setupDebugMessenger(VulkanEngine& vkEngine);

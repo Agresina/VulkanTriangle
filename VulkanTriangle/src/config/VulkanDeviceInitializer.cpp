@@ -39,10 +39,10 @@ void VulkanDeviceInitializer::pickPhysicalDevice(VulkanEngine& vkEngine) {
 
 void VulkanDeviceInitializer::createLogicalDevice(VulkanEngine& vkEngine) {
     // Find queue families of the picked physical device
-    QueueFamilyIndices indices = Utils::findQueueFamilies(vkEngine, vkEngine.physicalDevice);
+    vkEngine.indices = VulkanDeviceInitializer::findQueueFamilies(vkEngine, vkEngine.physicalDevice);
 
     std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-    std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
+    std::set<uint32_t> uniqueQueueFamilies = { vkEngine.indices.graphicsFamily.value(), vkEngine.indices.presentFamily.value() };
 
     float queuePriority = 1.0f;
     for (uint32_t queueFamily : uniqueQueueFamilies) {
@@ -80,15 +80,15 @@ void VulkanDeviceInitializer::createLogicalDevice(VulkanEngine& vkEngine) {
         throw std::runtime_error("failed to create logical device!");
     }
 
-    vkGetDeviceQueue(vkEngine.device, indices.graphicsFamily.value(), 0, &vkEngine.graphicsQueue);
-    vkGetDeviceQueue(vkEngine.device, indices.presentFamily.value(), 0, &vkEngine.presentQueue);
+    vkGetDeviceQueue(vkEngine.device, vkEngine.indices.graphicsFamily.value(), 0, &vkEngine.graphicsQueue);
+    vkGetDeviceQueue(vkEngine.device, vkEngine.indices.presentFamily.value(), 0, &vkEngine.presentQueue);
 }
 
 /**
     * Evaluate if a devices is suitable for the operations we want to perform
     **/
 bool VulkanDeviceInitializer::isDeviceSuitable(VulkanEngine& vkEngine, VkPhysicalDevice device) {
-    QueueFamilyIndices indices = Utils::findQueueFamilies(vkEngine, device);
+    //QueueFamilyIndices indices = Utils::findQueueFamilies(vkEngine, device);
 
     bool extensionsSupported = checkDeviceExtensionSupport(device);
 
@@ -98,7 +98,7 @@ bool VulkanDeviceInitializer::isDeviceSuitable(VulkanEngine& vkEngine, VkPhysica
         swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
     }
 
-    return indices.isComplete() && extensionsSupported && swapChainAdequate;
+    return vkEngine.indices.isComplete() && extensionsSupported && swapChainAdequate;
 }
 
 bool VulkanDeviceInitializer::checkDeviceExtensionSupport(VkPhysicalDevice device) {
@@ -115,4 +115,37 @@ bool VulkanDeviceInitializer::checkDeviceExtensionSupport(VkPhysicalDevice devic
     }
 
     return requiredExtensions.empty();
+}
+
+QueueFamilyIndices VulkanDeviceInitializer::findQueueFamilies(VulkanEngine& vkEngine, VkPhysicalDevice device) {
+    QueueFamilyIndices indices;
+
+    uint32_t queueFamilyCount = 0;
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
+
+    std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+
+
+    // Find Queue Family with graphics support
+    int i = 0;
+    for (const auto& queueFamily : queueFamilies) {
+        if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+            indices.graphicsFamily = i;
+        }
+
+        VkBool32 presentSupport = false;
+        vkGetPhysicalDeviceSurfaceSupportKHR(device, i, vkEngine.surface, &presentSupport);
+
+        if (presentSupport) {
+            indices.presentFamily = i;
+        }
+
+        if (indices.isComplete()) {
+            break;
+        }
+
+        i++;
+    }
+    return indices;
 }

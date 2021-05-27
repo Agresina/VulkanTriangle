@@ -12,6 +12,7 @@
 const uint32_t DEFAULT_WIDTH = 800;
 const uint32_t DEFAULT_HEIGHT = 600;
 
+class VulkanEngine;
 class VulkanInitializer {
 public:
 	VulkanInitializer() {

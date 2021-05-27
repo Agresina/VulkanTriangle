@@ -16,8 +16,6 @@
 class HelloTriangleApplication {
 public:
     void run() {
-        VulkanInitializer vkInitializer;
-        vkInitializer.initialize(&vkEngine);
         vkEngine.mainLoop();
     }
 
