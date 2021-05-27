@@ -22,12 +22,12 @@ public:
 		width = w;
 		height = h;
 	}
-	static int initialize(VulkanEngine* vkEngine);
+	static int initialize(VulkanEngine& vkEngine);
 
 private:
 	uint32_t width;
 	uint32_t height;
 	GLFWwindow* initWindow();
-	void initializeVulkan(VulkanEngine* vkEngine);
+	void initializeVulkan(VulkanEngine& vkEngine);
 
 };

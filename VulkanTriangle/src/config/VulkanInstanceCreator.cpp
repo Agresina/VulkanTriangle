@@ -1,9 +1,9 @@
 #include "VulkanInstanceCreator.h"
 
-VkInstance VulkanInstanceCreator::createInstance(VulkanEngine& vkEngine) {
+VkInstance VulkanInstanceCreator::createInstance(bool enableValidationLayers, std::vector<const char*> validationLayers) {
     VkInstance instance;
 
-    if (vkEngine.enableValidationLayers && !checkValidationLayerSupport()) {
+    if (enableValidationLayers && !checkValidationLayerSupport(validationLayers)) {
         throw std::runtime_error("validation layers requested, but not available!");
     }
 
@@ -19,11 +19,11 @@ VkInstance VulkanInstanceCreator::createInstance(VulkanEngine& vkEngine) {
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
 
-    auto extensions = getRequiredExtensions(vkEngine);
+    auto extensions = getRequiredExtensions(enableValidationLayers);
     createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
     createInfo.ppEnabledExtensionNames = extensions.data();
 
-    VulkanInstanceCreator::setupValidationLayers(vkEngine, createInfo);
+    VulkanInstanceCreator::setupValidationLayers(enableValidationLayers, createInfo, validationLayers);
 
     if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
         throw std::runtime_error("failed to create instance!");
@@ -32,7 +32,7 @@ VkInstance VulkanInstanceCreator::createInstance(VulkanEngine& vkEngine) {
     return instance;
 }
 
-bool VulkanInstanceCreator::checkValidationLayerSupport() {
+bool VulkanInstanceCreator::checkValidationLayerSupport(std::vector<const char*> validationLayers) {
     uint32_t layerCount;
     vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -57,26 +57,31 @@ bool VulkanInstanceCreator::checkValidationLayerSupport() {
     return true;
 }
 
-std::vector<const char*> VulkanInstanceCreator::getRequiredExtensions(VulkanEngine& vkEngine) {
+std::vector<const char*> VulkanInstanceCreator::getRequiredExtensions(bool enableValidationLayers) {
     uint32_t glfwExtensionCount = 0;
     const char** glfwExtensions;
     glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
     std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
 
-    if (vkEngine.enableValidationLayers) {
+    if (enableValidationLayers) {
         extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
     }
 
     return extensions;
 }
 
-void VulkanInstanceCreator::setupValidationLayers(VulkanEngine& vkEngine, VkInstanceCreateInfo createInfo) {
-    if (vkEngine.enableValidationLayers) {
+void VulkanInstanceCreator::setupValidationLayers(bool enableValidationLayers, VkInstanceCreateInfo createInfo, std::vector<const char*> validationLayers) {
+    if (enableValidationLayers) {
         createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
         createInfo.ppEnabledLayerNames = validationLayers.data();
 
-        VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo = CreatorInfoFactory::debugMessengerCreateInfo(vkEngine);
+        VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo = {};
+        debugCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+        debugCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+        debugCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+        debugCreateInfo.pfnUserCallback = debugCallback;
+
         createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
     }
     else {
@@ -84,4 +89,10 @@ void VulkanInstanceCreator::setupValidationLayers(VulkanEngine& vkEngine, VkInst
 
         createInfo.pNext = nullptr;
     }
+}
+
+VKAPI_ATTR VkBool32 VKAPI_CALL VulkanInstanceCreator::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData) {
+    std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
+
+    return VK_FALSE;
 }

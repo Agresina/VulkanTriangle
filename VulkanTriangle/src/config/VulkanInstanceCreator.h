@@ -6,14 +6,12 @@
 #include <stdexcept>
 #include <iostream>
 
-#include "../VulkanEngine.h"
-#include "CreatorInfoFactory.h"
-
 class VulkanInstanceCreator {
 public:
-	static VkInstance createInstance(VulkanEngine& vkEngine);
+	static VkInstance createInstance(bool enableValidationLayers, std::vector<const char*> validationLayers);
 private:
-	static std::vector<const char*> getRequiredExtensions(VulkanEngine& vkEngine);
-	static bool checkValidationLayerSupport();
-	static void setupValidationLayers(VulkanEngine& vkEngine, VkInstanceCreateInfo createInfo);
+	static std::vector<const char*> getRequiredExtensions(bool enableValidationLayers);
+	static bool checkValidationLayerSupport(std::vector<const char*> validationLayers);
+	static void setupValidationLayers(bool enableValidationLayers, VkInstanceCreateInfo createInfo, std::vector<const char*> validationLayers);
+	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData);
 };

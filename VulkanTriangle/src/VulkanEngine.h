@@ -21,9 +21,7 @@ struct QueueFamilyIndices {
 	}
 };
 
-const std::vector<const char*> validationLayers = {
-		"VK_LAYER_KHRONOS_validation"
-};
+
 
 const std::vector<const char*> deviceExtensions = {
 	VK_KHR_SWAPCHAIN_EXTENSION_NAME
@@ -36,6 +34,10 @@ public:
 	#else
 		const bool enableValidationLayers = true;
 	#endif
+
+	const std::vector<const char*> validationLayers = {
+		"VK_LAYER_KHRONOS_validation"
+	};
 
 	static SwapChainSupportDetails querySwapChainSupport(VulkanEngine& vkEngine, VkPhysicalDevice device) {
 		SwapChainSupportDetails details;

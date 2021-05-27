@@ -69,8 +69,8 @@ void VulkanDeviceInitializer::createLogicalDevice(VulkanEngine& vkEngine) {
     createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
     if (vkEngine.enableValidationLayers) {
-        createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
-        createInfo.ppEnabledLayerNames = validationLayers.data();
+        createInfo.enabledLayerCount = static_cast<uint32_t>(vkEngine.validationLayers.size());
+        createInfo.ppEnabledLayerNames = vkEngine.validationLayers.data();
     }
     else {
         createInfo.enabledLayerCount = 0;
