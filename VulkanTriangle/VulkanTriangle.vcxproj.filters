@@ -88,5 +88,8 @@
     <ClInclude Include="src\config\VulkanSwapChainConfigurer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\components\VulkanComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
