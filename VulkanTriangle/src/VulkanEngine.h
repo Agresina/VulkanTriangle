@@ -6,7 +6,7 @@
 #include <vector>
 #include <optional>
 
-#include "components/VulkanComponent.h"
+#include "components/VulkanInstanceComponent.h"
 
 struct SwapChainSupportDetails {
 	VkSurfaceCapabilitiesKHR capabilities;
@@ -23,19 +23,19 @@ struct QueueFamilyIndices {
 	}
 };
 
-
-
 const std::vector<const char*> deviceExtensions = {
 	VK_KHR_SWAPCHAIN_EXTENSION_NAME
 };
 
 class VulkanEngine {
 public:
-	void Notify(VulkanComponent* sender, std::string event);
+	void Notify(VulkanComponent* sender, std::string event) {
+		std::cout << "Received message from VulkanInstanceComponent!\n";
+	}
 	static VulkanEngine initialize() {
 		VulkanEngine vkEngine;
-		VulkanComponent* component = new VulkanComponent;
-		component->set_vulkanEngine(&vkEngine);
+		VulkanInstanceComponent* vkInstanceComponent = new VulkanInstanceComponent;
+		vkInstanceComponent->set_vulkanEngine(&vkEngine);
 		return vkEngine;
 	}
 

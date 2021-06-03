@@ -11,14 +11,12 @@
 #include <stdexcept>
 #include <vector>
 
-#include "config/VulkanInitializer.h"
+#include "VulkanEngine.h"
 
 class HelloTriangleApplication {
 public:
     void run() {
-        VulkanInitializer vkInitializer;
-        vkInitializer.initialize(vkEngine);
-        vkEngine.mainLoop();
+        VulkanEngine vkEngine = VulkanEngine::initialize();
     }
 
 private:

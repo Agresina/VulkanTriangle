@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\components\VulkanComponent.cpp" />
+    <ClCompile Include="src\components\VulkanInstanceComponent.cpp" />
     <ClCompile Include="src\config\CreatorInfoFactory.cpp" />
     <ClCompile Include="src\config\DebugMessenger.cpp" />
     <ClCompile Include="src\main.cpp" />
