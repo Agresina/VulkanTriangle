@@ -2,9 +2,6 @@
 
 #include <stdexcept>
 
-//#include "../Utils.h"
-#include "../VulkanEngine.h"
-
 class VulkanEngine;
 class VulkanDrawingBuffersConfigurator {
 public:

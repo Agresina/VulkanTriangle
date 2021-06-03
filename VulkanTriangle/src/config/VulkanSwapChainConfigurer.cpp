@@ -1,4 +1,5 @@
 #include "VulkanSwapChainConfigurer.h"
+#include "../VulkanEngine.h"
 
 
 void VulkanSwapChainConfigurer::createSwapChain(VulkanEngine& vkEngine) {

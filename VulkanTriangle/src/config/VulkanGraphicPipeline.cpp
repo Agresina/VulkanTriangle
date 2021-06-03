@@ -1,5 +1,5 @@
 #include "VulkanGraphicPipeline.h"
-
+#include "../VulkanEngine.h"
 
 void VulkanGraphicPipeline::initialize(VulkanEngine& vkEngine) {
     VulkanGraphicPipeline::createRenderPass(vkEngine);

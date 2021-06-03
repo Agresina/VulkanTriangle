@@ -1,10 +1,6 @@
 #pragma once
 
-#include "../VulkanEngine.h"
-//#include "../Utils.h"
-
 class VulkanEngine;
-//class Utils;
 class VulkanSwapChainConfigurer {
 public:
 	static void createSwapChain(VulkanEngine& vkEngine);

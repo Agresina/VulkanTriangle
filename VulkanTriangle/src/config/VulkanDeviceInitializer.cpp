@@ -1,4 +1,5 @@
 #include "VulkanDeviceInitializer.h"
+#include "../VulkanEngine.h"
 
 void VulkanDeviceInitializer::initializeDevice(VulkanEngine& vkEngine) {
 	createSurface(vkEngine);

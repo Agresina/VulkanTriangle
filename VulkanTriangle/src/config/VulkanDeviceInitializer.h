@@ -7,8 +7,6 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 
-#include "../VulkanEngine.h"
-
 class VulkanEngine;
 class VulkanDeviceInitializer {
 

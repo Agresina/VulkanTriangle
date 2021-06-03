@@ -1,4 +1,5 @@
 #include "VulkanDrawingBufferConfigurator.h"
+#include "../VulkanEngine.h"
 
 void VulkanDrawingBuffersConfigurator::configureDrawingBuffers(VulkanEngine& vkEngine) {
 	createFramebuffers(vkEngine);

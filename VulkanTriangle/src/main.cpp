@@ -10,8 +10,7 @@
 #include <optional>
 #include <stdexcept>
 #include <vector>
-
-#include "config/VulkanInitializer.h"
+#include "VulkanEngine.h"
 
 class HelloTriangleApplication {
 public:
