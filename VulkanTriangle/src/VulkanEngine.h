@@ -6,6 +6,8 @@
 #include <vector>
 #include <optional>
 
+#include "components/VulkanComponent.h"
+
 struct SwapChainSupportDetails {
 	VkSurfaceCapabilitiesKHR capabilities;
 	std::vector<VkSurfaceFormatKHR> formats;
@@ -27,9 +29,16 @@ const std::vector<const char*> deviceExtensions = {
 	VK_KHR_SWAPCHAIN_EXTENSION_NAME
 };
 
-class VulkanComponent;
 class VulkanEngine {
 public:
+	void Notify(VulkanComponent* sender, std::string event);
+	static VulkanEngine initialize() {
+		VulkanEngine vkEngine;
+		VulkanComponent* component = new VulkanComponent;
+		component->set_vulkanEngine(&vkEngine);
+		return vkEngine;
+	}
+
 	#ifdef NDEBUG
 		const bool enableValidationLayers = false;
 	#else
@@ -101,6 +110,7 @@ public:
 	size_t currentFrame = 0;
 
 private:
+	//VulkanInstanceComponent* vkInstanceComponent;
 	void drawFrame();
 	void cleanup();
 	void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator);

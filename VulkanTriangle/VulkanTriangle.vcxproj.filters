@@ -48,6 +48,9 @@
     <ClCompile Include="src\config\VulkanSwapChainConfigurer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\components\VulkanComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader.frag">
@@ -89,6 +92,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\VulkanComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\VulkanInstanceComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
