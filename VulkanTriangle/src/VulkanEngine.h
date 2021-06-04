@@ -34,8 +34,8 @@ public:
 	}
 	static VulkanEngine initialize() {
 		VulkanEngine vkEngine;
-		VulkanInstanceComponent* vkInstanceComponent = new VulkanInstanceComponent;
-		vkInstanceComponent->set_vulkanEngine(&vkEngine);
+		VulkanInstanceComponent vkInstanceComponent = VulkanInstanceComponent::initialize(&vkEngine, vkEngine.enableValidationLayers, vkEngine.validationLayers);
+		vkEngine.vkInstanceComponent = &vkInstanceComponent;
 		return vkEngine;
 	}
 
@@ -110,7 +110,7 @@ public:
 	size_t currentFrame = 0;
 
 private:
-	//VulkanInstanceComponent* vkInstanceComponent;
+	VulkanInstanceComponent* vkInstanceComponent;
 	void drawFrame();
 	void cleanup();
 	void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator);
