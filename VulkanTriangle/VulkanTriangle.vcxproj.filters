@@ -54,6 +54,9 @@
     <ClCompile Include="src\components\VulkanInstanceComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\components\VulkanDeviceComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\shader.frag">
@@ -98,6 +101,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\VulkanInstanceComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\VulkanDeviceComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

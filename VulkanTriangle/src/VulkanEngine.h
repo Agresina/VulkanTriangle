@@ -7,6 +7,7 @@
 #include <optional>
 
 #include "components/VulkanInstanceComponent.h"
+#include "components/VulkanDeviceComponent.h"
 
 struct SwapChainSupportDetails {
 	VkSurfaceCapabilitiesKHR capabilities;
@@ -34,8 +35,7 @@ public:
 	}
 	static VulkanEngine initialize() {
 		VulkanEngine vkEngine;
-		VulkanInstanceComponent vkInstanceComponent = VulkanInstanceComponent::initialize(&vkEngine, vkEngine.enableValidationLayers, vkEngine.validationLayers);
-		vkEngine.vkInstanceComponent = &vkInstanceComponent;
+		vkEngine.vkInstanceComponent = VulkanInstanceComponent::initialize(&vkEngine, vkEngine.enableValidationLayers, vkEngine.validationLayers);
 		return vkEngine;
 	}
 
@@ -78,9 +78,9 @@ public:
 	VkInstance instance;
 	VkDebugUtilsMessengerEXT debugMessenger;
 
-	VkSurfaceKHR surface;
+	/*VkSurfaceKHR surface;
 	VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-	VkDevice device;
+	VkDevice device;*/
 
 	VkQueue graphicsQueue;
 	VkQueue presentQueue;
@@ -110,7 +110,8 @@ public:
 	size_t currentFrame = 0;
 
 private:
-	VulkanInstanceComponent* vkInstanceComponent;
+	VulkanInstanceComponent vkInstanceComponent;
+	VulkanDeviceComponent vkDeviceComponent;
 	void drawFrame();
 	void cleanup();
 	void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger, const VkAllocationCallbacks* pAllocator);

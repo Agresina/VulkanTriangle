@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\components\VulkanComponent.cpp" />
+    <ClCompile Include="src\components\VulkanDeviceComponent.cpp" />
     <ClCompile Include="src\components\VulkanInstanceComponent.cpp" />
     <ClCompile Include="src\config\CreatorInfoFactory.cpp" />
     <ClCompile Include="src\config\DebugMessenger.cpp" />
@@ -178,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\components\VulkanComponent.h" />
+    <ClInclude Include="src\components\VulkanDeviceComponent.h" />
     <ClInclude Include="src\components\VulkanInstanceComponent.h" />
     <ClInclude Include="src\config\CreatorInfoFactory.h" />
     <ClInclude Include="src\config\DebugMessenger.h" />

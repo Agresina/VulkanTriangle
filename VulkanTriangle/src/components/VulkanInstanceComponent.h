@@ -7,8 +7,8 @@ class VulkanInstanceComponent : public VulkanComponent {
 public:
     void DoA();
     static VulkanInstanceComponent initialize(VulkanEngine* vkEngine, bool enableValidationLayers, std::vector<const char*> validationLayers);
-private:
 	VkInstance vkInstance;
+private:
 	static std::vector<const char*> getRequiredExtensions(bool enableValidationLayers);
 	static bool checkValidationLayerSupport(std::vector<const char*> validationLayers);
 	static void setupValidationLayers(bool enableValidationLayers, VkInstanceCreateInfo createInfo, std::vector<const char*> validationLayers);
