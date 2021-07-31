@@ -3,16 +3,16 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include <iostream>
-#include <fstream>
-#include <stdexcept>
 #include <algorithm>
-#include <vector>
 #include <cstring>
 #include <cstdlib>
 #include <cstdint>
+#include <fstream>
+#include <iostream>
 #include <optional>
 #include <set>
+#include <stdexcept>
+#include <vector>
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
