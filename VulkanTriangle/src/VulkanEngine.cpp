@@ -54,10 +54,10 @@ struct Vertex {
 		attributeDescriptions[0].offset = offsetof(Vertex, pos);
 
 		// Second parameter - Color - Description
-		attributeDescriptions[0].binding = 0;
-		attributeDescriptions[0].location = 1;
-		attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-		attributeDescriptions[0].offset = offsetof(Vertex, color);
+		attributeDescriptions[1].binding = 0;
+		attributeDescriptions[1].location = 1;
+		attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+		attributeDescriptions[1].offset = offsetof(Vertex, color);
 
 		return attributeDescriptions;
 	}
@@ -832,12 +832,12 @@ private:
 
 		presentInfo.pImageIndices = &imageIndex;
 
-		VkResult resultQueue = vkQueuePresentKHR(presentQueue, &presentInfo);
-		if (resultQueue == VK_ERROR_OUT_OF_DATE_KHR || resultQueue == VK_SUBOPTIMAL_KHR || framebufferResized) {
+		result = vkQueuePresentKHR(presentQueue, &presentInfo);
+		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || framebufferResized) {
 			framebufferResized = false;
 			recreateSwapChain();
 		}
-		else if (resultQueue != VK_SUCCESS) {
+		else if (result != VK_SUCCESS) {
 			throw std::runtime_error("failed to present swap chain image!");
 		}
 
