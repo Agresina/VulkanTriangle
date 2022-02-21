@@ -96,7 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\stb;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\tinyobjloader;C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\stb;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,7 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\stb;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\tinyobjloader;C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\stb;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\stb;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\tinyobjloader;C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\stb;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
@@ -148,7 +148,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\stb;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\tinyobjloader;C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\stb;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glm;C:\Desarrollo\Programas\Microsoft Visual Studio\2019\Enterprise\Libraries\glfw-3.3.2.bin.WIN64\include;C:\Desarrollo\Programas\VulkanSDK\1.2.154.1\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
