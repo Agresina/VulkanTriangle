@@ -158,11 +158,6 @@ struct UniformBufferObject {
 //    4, 5, 6, 6, 7, 4
 //};
 
-std::vector<Vertex> vertices;
-std::vector<uint32_t> indices;
-VkBuffer vertexBuffer;
-VkDeviceMemory vertexBufferMemory;
-
 class HelloTriangleApplication {
 public:
     void run() {
@@ -209,6 +204,8 @@ private:
     VkImageView textureImageView;
     VkSampler textureSampler;
 
+    std::vector<Vertex> vertices;
+    std::vector<uint32_t> indices;
     VkBuffer vertexBuffer;
     VkDeviceMemory vertexBufferMemory;
     VkBuffer indexBuffer;
@@ -855,13 +852,12 @@ private:
         int texWidth, texHeight, texChannels;
         stbi_uc* pixels = stbi_load(TEXTURE_PATH.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
         VkDeviceSize imageSize = texWidth * texHeight * 4;
+        // Calculate how many times the image size can be divided by 2
+        mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texWidth, texHeight)))) + 1;
 
         if (!pixels) {
             throw std::runtime_error("failed to load texture image!");
         }
-
-        // Calculate how many times the image size can be divided by 2
-        mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texWidth, texHeight)))) + 1;
 
         VkBuffer stagingBuffer;
         VkDeviceMemory stagingBufferMemory;
@@ -883,7 +879,7 @@ private:
         vkDestroyBuffer(device, stagingBuffer, nullptr);
         vkFreeMemory(device, stagingBufferMemory, nullptr);
 
-        generateMipmaps(textureImage, VK_FORMAT_R8G8B8_SRGB, texWidth, texHeight, mipLevels);
+        generateMipmaps(textureImage, VK_FORMAT_R8G8B8A8_SRGB, texWidth, texHeight, mipLevels);
     }
 
     void generateMipmaps(VkImage image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels) {
@@ -1031,8 +1027,8 @@ private:
         imageInfo.extent.width = width;
         imageInfo.extent.height = height;
         imageInfo.extent.depth = 1;
-        imageInfo.mipLevels = 1;
-        imageInfo.arrayLayers = mipLevels;
+        imageInfo.mipLevels = mipLevels;
+        imageInfo.arrayLayers = 1;
         imageInfo.format = format;
         imageInfo.tiling = tiling;
         imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
@@ -1164,6 +1160,7 @@ private:
                     uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
                     vertices.push_back(vertex);
                 }
+
                 indices.push_back(uniqueVertices[vertex]);
             }
         }
